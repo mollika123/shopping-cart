@@ -1,8 +1,13 @@
+"use client"
+
+import { useCart } from "@/context/CartContext";
+import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 
 const Navbar = () => {
+   const { cart } = useCart();
   return (
-    <nav className="border-b bg-cyan-700">
+    <nav className="border-b bg-cyan-900">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
 
         {/* Logo */}
@@ -10,12 +15,14 @@ const Navbar = () => {
           href="/" 
           className="text-2xl font-bold text-blue-600"
         >
-          🛒 Shoe
+       <h1 className="text-2xl font-extrabold tracking-wide text-white">
+                KICK<span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">HUB</span>
+              </h1>
         </Link>
 
 
         {/* Menu */}
-        <ul className="flex items-center gap-8 text-blue-700 font-bold">
+        <ul className="flex items-center gap-8 text-white font-bold">
           <li>
             <Link href="/" className="hover:text-blue-600">
               Home
@@ -29,9 +36,27 @@ const Navbar = () => {
           </li>
 
           <li>
-            <Link href="/cart" className="hover:text-blue-600">
-              🛒 Cart
-            </Link>
+            <Link href="/items/add" className="hover:text-cyan-200 transition">
+  Add Product
+</Link>
+          </li>
+          <li>
+                  <Link 
+            href="/cart"
+            className="relative"
+          >
+            <ShoppingCart size={25}/>
+
+
+            {
+              cart.length > 0 && (
+                <span className="absolute -right-3 -top-3 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs">
+                  {cart.length}
+                </span>
+              )
+            }
+
+          </Link>
           </li>
         </ul>
 

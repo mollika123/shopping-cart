@@ -25,7 +25,7 @@ const categories = [
 
 const Categories = () => {
   return (
-    <section className="py-20">
+    <section className="py-20 bg-cyan-900">
       <div className="mx-auto w-11/12">
 
         {/* Heading */}

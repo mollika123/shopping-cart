@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Shoe } from "@/types/shoe";
 import { ShoppingCart, Star } from "lucide-react";
 import Link from "next/link";
+import AddToCartButton from "./AddToCartButton";
 
 interface ProductCardProps {
   shoe: Shoe;
@@ -11,44 +12,49 @@ interface ProductCardProps {
 
 const ProductCard = ({ shoe }: ProductCardProps) => {
   return (
-    <div className="group overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+    <div className="group overflow-hidden rounded-3xl border border-slate-700 bg-cyan-700 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
       
       {/* Image Section */}
-      <div className="relative h-72 overflow-hidden bg-gray-100">
-        <Image
-          src={shoe.image}
-          alt={shoe.name}
-          fill
-          className="object-cover transition duration-500 group-hover:scale-110"
-        />
+      {/* Image Section */}
+<div className="relative m-4 h-64 overflow-hidden rounded-2xl bg-gray-100">
 
-        {/* Category Badge */}
-        <span className="absolute left-4 top-4 rounded-full bg-white px-4 py-1 text-sm font-medium text-gray-700 shadow">
-          {shoe.category}
-        </span>
+  <Image
+    src={shoe.image}
+    alt={shoe.name}
+    fill
+    className="rounded-2xl object-cover transition duration-500 group-hover:scale-110"
+  />
 
-        {/* Favorite */}
-        <button className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-xl shadow hover:bg-red-50">
-          ♡
-        </button>
-      </div>
+
+  {/* Category Badge */}
+  <span className="absolute left-3 top-3 rounded-full bg-white px-3 py-1 text-xs font-medium text-gray-700 shadow">
+    {shoe.category}
+  </span>
+
+
+  {/* Favorite */}
+  <button className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white text-xl shadow hover:bg-red-50">
+    ♡
+  </button>
+
+</div>
 
 
       {/* Content */}
       <div className="space-y-3 p-5">
 
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-gray-900">
+          <h2 className="text-xl font-bold text-white">
             {shoe.name}
           </h2>
 
-          <p className="text-lg font-bold text-blue-600">
+          <p className="text-lg font-bold text-white">
             ${shoe.price}
           </p>
         </div>
 
 
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-white">
           {shoe.brand}
         </p>
 
@@ -65,7 +71,7 @@ const ProductCard = ({ shoe }: ProductCardProps) => {
         </div>
 
 
-        <p className="line-clamp-2 text-sm text-gray-600">
+        <p className="line-clamp-2 text-sm text-white">
           {shoe.description}
         </p>
 
@@ -82,16 +88,18 @@ const ProductCard = ({ shoe }: ProductCardProps) => {
 
 
         {/* Button */}
-        <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 py-3 font-semibold text-white transition hover:opacity-90">
-          <ShoppingCart size={20} />
-          Add To Cart
-        </button>
-<Link
-  href={`/products/${shoe.id}`}
-  className="mt-3 block rounded-xl border border-cyan-500 py-3 text-center font-semibold text-cyan-600 transition hover:bg-cyan-500 hover:text-white"
->
-  View Details
-</Link>
+ <div className="mt-3 flex gap-3">
+
+  <AddToCartButton shoe={shoe} />
+
+  <Link
+    href={`/products/${shoe.id}`}
+    className="flex-1 rounded-xl border border-cyan-500 py-2.5 text-center font-semibold text-white transition hover:bg-cyan-500 hover:text-white"
+  >
+    View Details
+  </Link>
+
+</div>
       </div>
     </div>
   );

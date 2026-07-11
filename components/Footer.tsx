@@ -1,14 +1,12 @@
 const Footer = () => {
   return (
-    <footer className=" bg-cyan-700 text-gray-300">
+    <footer className=" bg-cyan-900 text-gray-300">
       <div className="mx-auto grid w-11/12 gap-10 py-12 md:grid-cols-4">
 
         {/* Brand */}
         <div>
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-black text-2xl">
-              👟
-            </div>
+         
 
             <div>
               <h1 className="text-2xl font-extrabold tracking-wide text-white">

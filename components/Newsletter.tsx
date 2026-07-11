@@ -1,7 +1,7 @@
 const Newsletter = () => {
   return (
-    <section className="py-20">
-      <div className="mx-auto w-11/12 max-w-6xl rounded-3xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 px-8 py-16 text-center text-white">
+    <section className="py-20 bg-cyan-900">
+      <div className="mx-auto w-11/12 max-w-6xl rounded-3xl bg-cyan-700 px-8 py-16 text-center text-white">
 
         <h2 className="text-4xl font-bold">
           Stay Updated

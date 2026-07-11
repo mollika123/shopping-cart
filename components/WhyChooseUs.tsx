@@ -34,7 +34,7 @@ const features = [
 
 const WhyChooseUs = () => {
   return (
-    <section className=" bg-slate-900 py-20">
+    <section className=" bg-cyan-900 py-20">
       <div className="w-11/12 mx-auto">
         {/* Heading */}
         <div className="text-center mb-12">
@@ -42,7 +42,7 @@ const WhyChooseUs = () => {
             Why Choose KICK<span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">HUB</span>?
           </h2>
 
-          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+          <p className="mt-4 text-gray-200 max-w-2xl mx-auto">
             We are committed to providing premium footwear with
             exceptional quality, fast delivery, and the best shopping
             experience.
@@ -57,7 +57,7 @@ const WhyChooseUs = () => {
             return (
               <div
                 key={feature.id}
-                className="rounded-2xl bg-white p-8 text-center shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl"
+                className="rounded-2xl bg-cyan-700 p-8 text-center shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl"
               >
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-cyan-100 text-cyan-600">
                   <Icon size={32} />
@@ -67,7 +67,7 @@ const WhyChooseUs = () => {
                   {feature.title}
                 </h3>
 
-                <p className="mt-3 text-sm leading-6 text-gray-500">
+                <p className="mt-3 text-sm leading-6 text-gray-200">
                   {feature.description}
                 </p>
               </div>

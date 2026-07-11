@@ -30,11 +30,11 @@ const reviews = [
 
 const Testimonials = () => {
   return (
-    <section className="bg-white py-20">
+    <section className="bg-cyan-900 py-20">
       <div className="mx-auto w-11/12 max-w-7xl">
         {/* Heading */}
         <div className="mb-12 text-center">
-          <h2 className="text-4xl font-bold text-gray-900">
+          <h2 className="text-4xl font-bold text-gray-300">
             What Our Customers Say
           </h2>
 
@@ -48,7 +48,7 @@ const Testimonials = () => {
           {reviews.map((review) => (
             <div
               key={review.id}
-              className="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl"
+              className="rounded-3xl border border-gray-100 bg-cyan-700 p-8 shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl"
             >
               {/* User */}
               <div className="flex items-center gap-4">
@@ -61,11 +61,11 @@ const Testimonials = () => {
                 />
 
                 <div>
-                  <h3 className="font-bold text-gray-900">
+                  <h3 className="font-bold text-gray-400">
                     {review.name}
                   </h3>
 
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-300">
                     {review.role}
                   </p>
                 </div>
@@ -83,7 +83,7 @@ const Testimonials = () => {
               </div>
 
               {/* Review */}
-              <p className="mt-5 leading-7 text-gray-600">
+              <p className="mt-5 leading-7 text-gray-300">
                 "{review.review}"
               </p>
             </div>

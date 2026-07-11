@@ -3,10 +3,10 @@ import { shoes } from "@/data/shoes";
 import Link from "next/link";
 
 const FeaturedShoes = () => {
-  const featuredShoes = shoes.slice(0, 4);
+  const featuredShoes = shoes.slice(0, 6);
 
   return (
-    <section className="py-20 px-6">
+    <section className="py-20 px-6 bg-cyan-900">
       <div className="mx-auto max-w-7xl">
 
         {/* Heading */}
@@ -23,7 +23,7 @@ const FeaturedShoes = () => {
 
 
         {/* Product Grid */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {
             featuredShoes.map((shoe) => (
               <ProductCard

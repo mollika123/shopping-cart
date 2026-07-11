@@ -2,6 +2,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { shoes } from "@/data/shoes";
 import { Star, ShoppingCart } from "lucide-react";
+import AddToCartButton from "@/components/AddToCartButton";
 
 interface ProductDetailsProps {
   params: Promise<{
@@ -98,10 +99,7 @@ const ProductDetailsPage = async ({ params }: ProductDetailsProps) => {
 
           {/* Buttons */}
           <div className="mt-10 flex gap-4">
-            <button className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 py-4 font-semibold text-white transition hover:opacity-90">
-              <ShoppingCart size={20} />
-              Add To Cart
-            </button>
+           <AddToCartButton  shoe={shoe} />
 
             <button className="rounded-xl border px-8 py-4 font-semibold hover:bg-gray-100">
               Buy Now
