@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Shoe } from "@/types/shoe";
 import { ShoppingCart, Star } from "lucide-react";
+import Link from "next/link";
 
 interface ProductCardProps {
   shoe: Shoe;
@@ -85,7 +86,12 @@ const ProductCard = ({ shoe }: ProductCardProps) => {
           <ShoppingCart size={20} />
           Add To Cart
         </button>
-
+<Link
+  href={`/products/${shoe.id}`}
+  className="mt-3 block rounded-xl border border-cyan-500 py-3 text-center font-semibold text-cyan-600 transition hover:bg-cyan-500 hover:text-white"
+>
+  View Details
+</Link>
       </div>
     </div>
   );
