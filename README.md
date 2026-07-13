@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 👟 KICKHUB - Premium Footwear E-commerce
 
-## Getting Started
+KICKHUB is a modern and responsive footwear shopping platform built with **Next.js, TypeScript, Tailwind CSS, and modern UI libraries**.  
+Users can explore shoes, view product details, manage cart items, and experience a smooth shopping interface.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Live Website
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🔗 Live Link: Add your Vercel link here
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📌 Features
 
-## Learn More
+### 🏠 Landing Page
+- Modern hero section with animation
+- Featured shoes section
+- Categories section
+- Sales statistics
+- Why choose us section
+- Customer testimonials
+- Newsletter section
 
-To learn more about Next.js, take a look at the following resources:
+### 🛍️ Product Features
+- Browse all shoes
+- Search products by name
+- Filter products by category
+- Sort products by price
+- Product details page
+- Add products to cart
+- Cart item count
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🔐 Authentication
+- User registration
+- User login
+- Session handling
+- Protected routes for:
+  - Add Product
+  - Manage Product
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 📦 Product Management
+- Add new products
+- Manage products
+- Delete products
+- Local storage based product management
 
-## Deploy on Vercel
+### 📱 Responsive Design
+- Fully responsive for:
+  - Mobile
+  - Tablet
+  - Desktop
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛠️ Technologies Used
+
+### Frontend
+- Next.js
+- TypeScript
+- React.js
+- Tailwind CSS
+- HeroUI
+- Framer Motion
+- Lucide Icons
+
+### Tools
+- Git & GitHub
+- Vercel Deployment
+- npm
+
+---
+
+## 📂 Project Structure
