@@ -1,9 +1,10 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
-
+import { motion } from "framer-motion";
 const Hero = () => {
   return (
-    <section className="overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
+   <section className="min-h-[65vh] overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-20 md:grid-cols-2">
 
         {/* Left Content */}
@@ -74,29 +75,42 @@ const Hero = () => {
 
 
           {/* Product Image Card */}
-          <div className="relative rounded-3xl  p-8 shadow-xl">
+       {/* Product Image Card */}
+{/* Product Image Card */}
+<motion.div
+  animate={{
+    y: [0, -15, 0],
+  }}
+  transition={{
+    duration: 3,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+  className="relative rounded-3xl p-8 shadow-xl"
+>
 
-            <Image
-              src="/banner.jpg"
-              width={450}
-              height={450}
-              alt="Shopping products"
-              className="object-contain"
-            />
+  <Image
+    src="/banner.jpg"
+    width={450}
+    height={450}
+    alt="Shopping products"
+    className="object-contain"
+  />
 
 
-            {/* Rating Card */}
-            <div className="absolute -right-5 -top-0 rounded-xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-500 px-8 py-7 text-white shadow-lg">
-              ⭐ 4.9 Rating
-            </div>
+  {/* Rating Card */}
+  <div className="absolute -right-5 -top-0 rounded-xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-500 px-8 py-7 text-white shadow-lg">
+    ⭐ 4.9 Rating
+  </div>
 
 
-            {/* Discount Card */}
-            <div className="absolute -bottom-8 -left-9 rounded-xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-500  px-8 py-7 text-white shadow-lg">
-              🔥 30% OFF
-            </div>
+  {/* Discount Card */}
+  <div className="absolute -bottom-8 -left-9 rounded-xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-500 px-8 py-7 text-white shadow-lg">
+    🔥 30% OFF
+  </div>
 
-          </div>
+
+</motion.div>
 
         </div>
 

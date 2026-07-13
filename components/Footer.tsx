@@ -100,24 +100,11 @@ const Footer = () => {
 
 
             <li>
-              <Link href="/faq" className="hover:text-cyan-300">
-                FAQ
+              <Link href="/about" className="hover:text-cyan-300">
+                About
               </Link>
             </li>
 
-
-            <li>
-              <Link href="/shipping" className="hover:text-cyan-300">
-                Shipping Policy
-              </Link>
-            </li>
-
-
-            <li>
-              <Link href="/return-policy" className="hover:text-cyan-300">
-                Return Policy
-              </Link>
-            </li>
 
           </ul>
 
