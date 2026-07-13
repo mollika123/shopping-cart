@@ -19,7 +19,9 @@ export default function SigninPage() {
 
     const toggleVisibility = () => setIsVisible(!isVisible);
 
-    const handleSignin = async (e) => {
+    const handleSignin = async (
+  e: React.FormEvent<HTMLFormElement>
+) => {
         e.preventDefault();
 
         setError("");
@@ -64,7 +66,7 @@ export default function SigninPage() {
                     <TextField isRequired name="email" type="email" className="flex flex-col gap-1.5">
                         <Label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Email Address</Label>
                         <InputGroup className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 bg-zinc-50 dark:bg-zinc-900 focus-within:border-primary transition-colors">
-                            <At className="text-zinc-400 pointer-events-none" size={16} />
+                            <At className="text-zinc-400 pointer-events-none"  />
                             <Input
                                 placeholder="you@example.com"
                                 value={email}
@@ -78,7 +80,7 @@ export default function SigninPage() {
                     <TextField isRequired name="password" className="flex flex-col gap-1.5">
                         <Label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Password</Label>
                         <InputGroup className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 bg-zinc-50 dark:bg-zinc-900 focus-within:border-primary transition-colors">
-                            <ShieldKeyhole className="text-zinc-400 pointer-events-none" size={16} />
+                            <ShieldKeyhole className="text-zinc-400 pointer-events-none"  />
                             <Input
                                 type={isVisible ? "text" : "password"}
                                 placeholder="Enter your password"
@@ -92,7 +94,7 @@ export default function SigninPage() {
                                 onClick={toggleVisibility}
                                 aria-label="toggle password visibility"
                             >
-                                {isVisible ? <EyeSlash size={18} /> : <Eye size={18} />}
+                                {isVisible ? <EyeSlash className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                             </button>
                         </InputGroup>
                     </TextField>
@@ -111,15 +113,15 @@ export default function SigninPage() {
                     )}
 
                     {/* Action Button */}
-                    <Button
-                        type="submit"
-                        
-                        className="w-full bg-blue-600 text-white"
-                        isLoading={isLoading}
-                        isDisabled={isLoading}
-                    >
-                        Log In
-                    </Button>
+                <Button
+  type="submit"
+  className="w-full bg-blue-600 text-white"
+   isDisabled={isLoading}
+>
+  {
+    isLoading ? "Logging in..." : "Log In"
+  }
+</Button>
         
          
                     {/* Navigation Option */}
