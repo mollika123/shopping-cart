@@ -6,7 +6,7 @@ const FeaturedShoes = () => {
   const featuredShoes = shoes.slice(0, 6);
 
   return (
-    <section className="py-20 px-6 bg-cyan-900">
+    <section className="py-20 px-6 bg-white">
       <div className="mx-auto max-w-7xl">
 
         {/* Heading */}

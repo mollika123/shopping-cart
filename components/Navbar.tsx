@@ -1,86 +1,284 @@
-"use client"
+"use client";
 
+import { useState } from "react";
 import { useCart } from "@/context/CartContext";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Menu, X, User } from "lucide-react";
 import Link from "next/link";
+import { signOut, useSession } from "@/app/lib/auth-client";
 
 const Navbar = () => {
-   const { cart } = useCart();
+  const { cart } = useCart();
+  const { data: session } = useSession();
+
+  const [open, setOpen] = useState(false);
+
+
+  const publicLinks = [
+    { name: "Home", href: "/" },
+    { name: "Products", href: "/products" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
+  ];
+
+
+  const privateLinks = [
+    { name: "Add Product", href: "/items/add" },
+    { name: "Manage Product", href: "/items/manage" },
+  ];
+
+
+  const links = session?.user
+    ? [
+        ...publicLinks.slice(0, 2),
+        ...privateLinks,
+        ...publicLinks.slice(2),
+      ]
+    : publicLinks;
+
+
   return (
-    <nav className="border-b bg-cyan-900">
+    <nav className="sticky top-0 z-50 bg-gradient-to-r from-cyan-950 via-blue-950 to-purple-950">
+
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
 
+
         {/* Logo */}
-        <Link 
-          href="/" 
-          className="text-2xl font-bold text-blue-600"
-        >
-       <h1 className="text-2xl font-extrabold tracking-wide text-white">
-                KICK<span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">HUB</span>
-              </h1>
+        <Link href="/">
+          <h1 className="text-3xl font-extrabold text-white">
+            KICK
+            <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+              HUB
+            </span>
+          </h1>
         </Link>
 
 
-        {/* Menu */}
-        <ul className="flex items-center gap-8 text-white font-bold">
+
+        {/* Desktop Menu */}
+        <ul className="hidden lg:flex items-center gap-7 text-white">
+
+          {
+            links.map((link)=>(
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="transition hover:text-cyan-300"
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))
+          }
+
+
+          {/* Cart */}
           <li>
-            <Link href="/" className="hover:text-blue-600">
-              Home
+            <Link
+              href="/cart"
+              className="relative"
+            >
+              <ShoppingCart size={25}/>
+
+              {
+                cart.length > 0 && (
+                  <span className="absolute -right-3 -top-3 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                    {cart.length}
+                  </span>
+                )
+              }
+
             </Link>
           </li>
 
-          <li>
-            <Link href="/products" className="hover:text-blue-600">
-              Products
-            </Link>
-          </li>
-
-          <li>
-            <Link href="/items/add" className="hover:text-cyan-200 transition">
-  Add Product
-</Link>
-          </li>
-          <li>
-                  <Link 
-            href="/cart"
-            className="relative"
-          >
-            <ShoppingCart size={25}/>
-
-
-            {
-              cart.length > 0 && (
-                <span className="absolute -right-3 -top-3 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs">
-                  {cart.length}
-                </span>
-              )
-            }
-
-          </Link>
-          </li>
         </ul>
 
 
-        {/* Auth Buttons */}
-        <div className="flex items-center gap-3">
-          <Link
-            href="/login"
-            className="rounded-md border border-blue-600 px-4 py-2 text-blue-600 hover:bg-blue-600 hover:text-white transition"
-          >
-            Login
-          </Link>
 
-          <Link
-            href="/register"
-            className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition"
-          >
-            Register
-          </Link>
+
+        {/* Desktop Auth */}
+
+        <div className="hidden lg:flex items-center gap-3">
+
+
+          {
+            session?.user ? (
+
+              <>
+
+                <div className="flex items-center gap-2 text-white">
+                  <User size={20}/>
+
+                  <span>
+                    {session.user.name}
+                  </span>
+
+                </div>
+
+
+                <button
+                  onClick={() => signOut()}
+                  className="rounded-full bg-red-500 px-5 py-2 text-white transition hover:bg-red-600"
+                >
+                  Logout
+                </button>
+
+              </>
+
+
+            ) : (
+
+              <>
+
+                <Link
+                  href="/login"
+                  className="rounded-full border border-cyan-300 px-5 py-2 text-white transition hover:bg-cyan-400 hover:text-black"
+                >
+                  Login
+                </Link>
+
+
+                <Link
+                  href="/register"
+                  className="rounded-full bg-cyan-500 px-5 py-2 text-white transition hover:bg-cyan-600"
+                >
+                  Register
+                </Link>
+
+              </>
+
+            )
+
+          }
+
+
         </div>
 
+
+
+
+        {/* Mobile Menu Button */}
+
+        <button
+          onClick={() => setOpen(!open)}
+          className="text-white lg:hidden"
+        >
+
+          {
+            open 
+            ? <X size={28}/>
+            : <Menu size={28}/>
+          }
+
+        </button>
+
+
       </div>
+
+
+
+
+
+      {/* Mobile Menu */}
+
+      {
+        open && (
+
+          <div className="px-6 pb-6 text-white lg:hidden">
+
+
+            <ul className="flex flex-col gap-4">
+
+
+              {
+                links.map((link)=>(
+                  <li key={link.href}>
+
+                    <Link
+                      href={link.href}
+                      onClick={()=>setOpen(false)}
+                      className="hover:text-cyan-300"
+                    >
+                      {link.name}
+                    </Link>
+
+                  </li>
+                ))
+              }
+
+
+
+              {/* Cart */}
+
+              <li>
+
+                <Link
+                  href="/cart"
+                  className="flex items-center gap-2"
+                  onClick={()=>setOpen(false)}
+                >
+
+                  <ShoppingCart size={22}/>
+
+                  Cart ({cart.length})
+
+                </Link>
+
+              </li>
+
+
+
+
+              {
+                session?.user ? (
+
+                  <button
+                    onClick={() => signOut()}
+                    className="rounded-md bg-red-500 py-2"
+                  >
+                    Logout
+                  </button>
+
+
+                ) : (
+
+                  <div className="flex gap-3">
+
+
+                    <Link
+                      href="/login"
+                      className="rounded-md border px-4 py-2"
+                    >
+                      Login
+                    </Link>
+
+
+                    <Link
+                      href="/register"
+                      className="rounded-md bg-cyan-500 px-4 py-2"
+                    >
+                      Register
+                    </Link>
+
+
+                  </div>
+
+                )
+              }
+
+
+
+            </ul>
+
+
+          </div>
+
+        )
+      }
+
+
     </nav>
   );
 };
+
 
 export default Navbar;

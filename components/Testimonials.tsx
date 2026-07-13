@@ -30,11 +30,11 @@ const reviews = [
 
 const Testimonials = () => {
   return (
-    <section className="bg-cyan-900 py-20">
+    <section className="bg-white py-20">
       <div className="mx-auto w-11/12 max-w-7xl">
         {/* Heading */}
         <div className="mb-12 text-center">
-          <h2 className="text-4xl font-bold text-gray-300">
+          <h2 className="text-4xl font-bold text-gray-600">
             What Our Customers Say
           </h2>
 

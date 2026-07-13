@@ -14,7 +14,7 @@ const AddToCartButton = ({ shoe }: Props) => {
   return (
     <button
       onClick={() => addToCart(shoe)}
-      className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 py-2.5 font-semibold text-white transition hover:opacity-90"
+      className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 py-2.5 px-4 font-semibold text-white transition hover:opacity-90"
     >
      
       Add To Cart

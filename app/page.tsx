@@ -3,6 +3,7 @@ import FeaturedShoes from "@/components/FeaturedShoes";
 import Hero from "@/components/Hero";
 import Newsletter from "@/components/Newsletter";
 import ProductCard from "@/components/ProductCard";
+import SalesChart from "@/components/SalesChart";
 import Testimonials from "@/components/Testimonials";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import { shoes } from "@/data/shoes";
@@ -25,6 +26,7 @@ export default function Home() {
 
       <FeaturedShoes></FeaturedShoes>
       <Categories></Categories>
+      <SalesChart></SalesChart>
       <WhyChooseUs></WhyChooseUs>
       <Testimonials></Testimonials>
       <Newsletter></Newsletter>
