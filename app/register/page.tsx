@@ -1,204 +1,510 @@
 "use client";
 
 import { useState } from "react";
-import {
-    Card, Button, Link, TextField, Select,
-    Label, InputGroup, Input, RadioGroup, Radio, ListBox
-} from "@heroui/react";
-import { Eye, EyeSlash, Person, At, ShieldKeyhole, Picture } from "@gravity-ui/icons";
 import { useRouter } from "next/navigation";
-import { signUp } from "../lib/auth-client";
+import {
+  Card,
+  Button,
+  Link,
+  TextField,
+  Label,
+  InputGroup,
+  Input,
+} from "@heroui/react";
+
+import {
+  Eye,
+  EyeSlash,
+  Person,
+  At,
+  ShieldKeyhole,
+} from "@gravity-ui/icons";
+
+import { signUpWithEmail } from "@/lib/auth-service";
+
 
 export default function SignupPage() {
-    // ফর্মের স্টেটসমূহ (Form Fields)
-    const router = useRouter();
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [photoUrl, setPhotoUrl] = useState(""); // ছবির 
 
-    // ইউজার ইন্টারফেসের স্টেটসমূহ (UI States)
-    const [isVisible, setIsVisible] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
+  const router = useRouter();
 
-    const toggleVisibility = () => setIsVisible(!isVisible);
-  
-    const handleSignup = async (e: React.FormEvent<HTMLFormElement>
-) => {
-        e.preventDefault();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-        setError("");
-        setSuccess("");
-        setIsLoading(true);
-    router.push("/");
-        try {
-            // auth-client এর মাধ্যমে সাইন-আপ রিকোয়েস্ট পাঠানো
-            const { data, error: authError } = await signUp.email({
-                email,
-                password,
-                name,
-              
-                image: photoUrl, // এখানে সরাসরি ফটোর লিংকটি পাঠানো হচ্ছে
-              
-            });
+  const [isVisible, setIsVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
 
-            if (authError) {
-                setError(authError.message || "Something went wrong during signup.");
-            } else {
-                setSuccess("Account created successfully! Welcome.");
-                // ফর্ম রিসেট করা
-                setName("");
-                setEmail("");
-                setPassword("");
-                setPhotoUrl("");
-                
-            }
-        } catch (err) {
-            setError("An unexpected network error occurred.");
-        } finally {
-            setIsLoading(false);
-        }
-    };
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
 
-    return (
-        <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-zinc-950 px-4">
-            <Card className="w-full max-w-md p-6 shadow-sm border border-zinc-200 dark:border-zinc-800">
 
-                {/* হেডার অংশ */}
-                <div className="flex flex-col items-center justify-center gap-1 pb-6 border-b border-zinc-100 dark:border-zinc-800 mb-6 text-center">
-                    <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">Create an account</h1>
-                    <p className="text-sm text-zinc-600 dark:text-zinc-400">Fill in the fields below to get started</p>
-                </div>
+  const handleSignup = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
 
-                {/* ফর্ম বডি */}
-                <form onSubmit={handleSignup} className="flex flex-col gap-5">
+    e.preventDefault();
 
-                    {/* নাম (Name Field) */}
-                    <TextField isRequired name="name" className="flex flex-col gap-1.5">
-                        <Label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Name</Label>
-                        <InputGroup className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 bg-zinc-50 dark:bg-zinc-900 focus-within:border-primary transition-colors">
-                            <Person className="text-zinc-400 pointer-events-none"/>
-                            <Input
-                                type="text"
-                                placeholder="Enter your full name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                className="w-full bg-transparent py-2 text-sm outline-none border-none text-zinc-900 dark:text-zinc-100"
-                            />
-                        </InputGroup>
-                    </TextField>
+    setError("");
+    setSuccess("");
+    setIsLoading(true);
 
-                    {/* ইমেইল (Email Field) */}
-                    <TextField isRequired name="email" type="email" className="flex flex-col gap-1.5">
-                        <Label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Email Address</Label>
-                        <InputGroup className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 bg-zinc-50 dark:bg-zinc-900 focus-within:border-primary transition-colors">
-                            <At className="text-zinc-400 pointer-events-none"  />
-                            <Input
-                                placeholder="you@example.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="w-full bg-transparent py-2 text-sm outline-none border-none text-zinc-900 dark:text-zinc-100"
-                            />
-                        </InputGroup>
-                    </TextField>
 
-                    {/* ফটোর লিংক (Photo URL Field) */}
-                    <TextField isRequired name="photoUrl" className="flex flex-col gap-1.5">
-                        <Label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Photo URL</Label>
-                        <InputGroup className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 bg-zinc-50 dark:bg-zinc-900 focus-within:border-primary transition-colors">
-                            <Picture className="text-zinc-400 pointer-events-none"  />
-                            <Input
-                                type="url"
-                                placeholder="https://example.com/your-photo.jpg"
-                                value={photoUrl}
-                                onChange={(e) => setPhotoUrl(e.target.value)}
-                                className="w-full bg-transparent py-2 text-sm outline-none border-none text-zinc-900 dark:text-zinc-100"
-                            />
-                        </InputGroup>
-                    </TextField>
+    try {
 
-                    {/* পাসওয়ার্ড (Password Field) */}
-                    <TextField isRequired name="password" className="flex flex-col gap-1.5">
-                        <Label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Password</Label>
-                        <InputGroup className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 bg-zinc-50 dark:bg-zinc-900 focus-within:border-primary transition-colors">
-                            <ShieldKeyhole className="text-zinc-400 pointer-events-none"  />
-                            <Input
-                                type={isVisible ? "text" : "password"}
-                                placeholder="Choose a password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-transparent py-2 text-sm outline-none border-none text-zinc-900 dark:text-zinc-100"
-                            />
-                            <button
-                                className="focus:outline-none text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition"
-                                type="button"
-                                onClick={toggleVisibility}
-                                aria-label="toggle password visibility"
-                            >
-                                {isVisible ? <EyeSlash  /> : <Eye  />}
-                            </button>
-                        
-                        </InputGroup>
-                    </TextField>
+      await signUpWithEmail(
+        name,
+        email,
+        password
+      );
 
-                    {/* রোল সিলেকশন (ইনলাইন করা হয়েছে) */}
-                    {/* <div className="flex flex-col gap-2">
-                        <Label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Select Role</Label>
-                        <RadioGroup 
-                            value={role} 
-                            onValueChange={setRole} 
-                            orientation="horizontal"
-                            className="flex flex-row gap-6 pt-1"
-                        >
-                            <Radio value="tenant" className="flex items-center gap-2 text-sm text-zinc-800 dark:text-zinc-200 cursor-pointer">
-                                Tenant
-                            </Radio>
-                            <Radio value="owner" className="flex items-center gap-2 text-sm text-zinc-800 dark:text-zinc-200 cursor-pointer">
-                                Owner
-                            </Radio>
-                        </RadioGroup>
-                    </div> */}
-                       
 
-        
-       
-                    {/* এরর মেসেজ */}
-                    {error && (
-                        <div className="p-3.5 text-xs font-medium rounded-xl bg-red-100/60 dark:bg-red-950/50 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-900">
-                            <span className="font-semibold">Error:</span> {error}
-                        </div>
-                    )}
+      setSuccess(
+        "Account created successfully!"
+      );
 
-                    {success && (
-                        <div className="p-3.5 text-xs font-medium rounded-xl bg-emerald-100/60 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900">
-                            <span className="font-semibold">Success:</span> {success}
-                        </div>
-                    )}
 
-                    {/* সাবমিট বাটন */}
-                  <Button
-  type="submit"
-  className="w-full bg-blue-600 text-white"
-   isDisabled={isLoading}
->
-  {
-    isLoading ? "creating account ...." : "Register"
-  }
-</Button>
+      setName("");
+      setEmail("");
+      setPassword("");
 
-                    {/* সাইন-ইন পেজে যাওয়ার লিংক */}
-                    <div className="text-center pt-4 border-t border-zinc-100 dark:border-zinc-800 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                        Already have an account?{" "}
-                        <Link href="/login" className="font-medium cursor-pointer text-sm text-blue-600 dark:text-blue-400">
-                            Sign in instead
-                        </Link>
-                    </div>
 
-                </form>
-            </Card>
+      setTimeout(() => {
+        router.push("/");
+      }, 1500);
+
+
+    } catch (err) {
+
+      const errorInstance = err as Error;
+
+      setError(
+        errorInstance.message ||
+        "Something went wrong"
+      );
+
+
+    } finally {
+
+      setIsLoading(false);
+
+    }
+
+  };
+
+
+
+  return (
+
+    <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-zinc-950 px-4">
+
+
+      <Card
+        className="
+        w-full 
+        max-w-md 
+        p-8 
+        rounded-2xl
+        shadow-lg
+        border 
+        border-zinc-200 
+        dark:border-zinc-800
+        "
+      >
+
+
+        {/* Header */}
+
+        <div className="text-center mb-8">
+
+
+          <h1 className="
+          text-3xl 
+          font-bold
+          text-zinc-900
+          dark:text-white
+          ">
+            Create an account
+          </h1>
+
+
+          <p className="
+          text-sm 
+          text-zinc-500 
+          mt-2
+          ">
+            Join ShopCart and start shopping today
+          </p>
+
+
         </div>
-    );
+
+
+
+
+
+        <form
+          onSubmit={handleSignup}
+          className="flex flex-col gap-6"
+        >
+
+
+
+          {/* Name */}
+
+          <TextField
+            isRequired
+            className="flex flex-col gap-2"
+          >
+
+            <Label>
+              Name
+            </Label>
+
+
+            <InputGroup
+              className="
+              flex
+              items-center
+              gap-3
+              h-12
+              w-full
+              border
+              border-zinc-200
+              dark:border-zinc-800
+              rounded-xl
+              px-4
+              bg-white
+              dark:bg-zinc-900
+              focus-within:border-blue-500
+              transition
+              "
+            >
+
+              <Person className="h-5 w-5 text-zinc-400"/>
+
+
+              <Input
+                className="w-full text-sm"
+                type="text"
+                placeholder="Enter your name"
+                value={name}
+                onChange={(e)=>
+                  setName(e.target.value)
+                }
+              />
+
+
+            </InputGroup>
+
+
+          </TextField>
+
+
+
+
+
+          {/* Email */}
+
+          <TextField
+            isRequired
+            className="flex flex-col gap-2"
+          >
+
+            <Label>
+              Email Address
+            </Label>
+
+
+
+            <InputGroup
+              className="
+              flex
+              items-center
+              gap-3
+              h-12
+              w-full
+              border
+              border-zinc-200
+              dark:border-zinc-800
+              rounded-xl
+              px-4
+              bg-white
+              dark:bg-zinc-900
+              focus-within:border-blue-500
+              transition
+              "
+            >
+
+
+              <At className="h-5 w-5 text-zinc-400"/>
+
+
+              <Input
+
+                className="w-full text-sm"
+
+                type="email"
+
+                placeholder="you@example.com"
+
+                value={email}
+
+                onChange={(e)=>
+                  setEmail(e.target.value)
+                }
+
+              />
+
+
+            </InputGroup>
+
+
+          </TextField>
+
+
+
+
+
+
+          {/* Password */}
+
+          <TextField
+            isRequired
+            className="flex flex-col gap-2"
+          >
+
+            <Label>
+              Password
+            </Label>
+
+
+
+            <InputGroup
+              className="
+              flex
+              items-center
+              gap-3
+              h-12
+              w-full
+              border
+              border-zinc-200
+              dark:border-zinc-800
+              rounded-xl
+              px-4
+              bg-white
+              dark:bg-zinc-900
+              focus-within:border-blue-500
+              transition
+              "
+            >
+
+
+              <ShieldKeyhole 
+                className="h-5 w-5 text-zinc-400"
+              />
+
+
+
+              <Input
+
+                className="w-full text-sm"
+
+                type={
+                  isVisible
+                  ? "text"
+                  : "password"
+                }
+
+
+                placeholder="Choose a password"
+
+                value={password}
+
+                onChange={(e)=>
+                  setPassword(e.target.value)
+                }
+
+              />
+
+
+
+              <button
+
+                type="button"
+
+                onClick={toggleVisibility}
+
+                className="
+                flex
+                items-center
+                text-zinc-400
+                hover:text-zinc-700
+                "
+
+              >
+
+                {
+                  isVisible
+
+                  ?
+
+                  <EyeSlash className="h-5 w-5"/>
+
+                  :
+
+                  <Eye className="h-5 w-5"/>
+
+                }
+
+
+              </button>
+
+
+
+            </InputGroup>
+
+
+          </TextField>
+
+
+
+
+
+
+          {/* Error */}
+
+          {
+            error &&
+
+            <div className="
+            p-3
+            rounded-xl
+            bg-red-100
+            text-red-700
+            text-sm
+            "
+            >
+
+              {error}
+
+            </div>
+          }
+
+
+
+
+
+
+          {/* Success */}
+
+          {
+            success &&
+
+            <div className="
+            p-3
+            rounded-xl
+            bg-green-100
+            text-green-700
+            text-sm
+            "
+            >
+
+              {success}
+
+            </div>
+
+          }
+
+
+
+
+
+
+
+          <Button
+
+            type="submit"
+
+            isDisabled={isLoading}
+
+            className="
+            w-full
+            h-12
+            rounded-xl
+            bg-blue-600
+            text-white
+            font-medium
+            hover:bg-blue-700
+            "
+
+          >
+
+            {
+              isLoading
+
+              ?
+
+              "Creating account..."
+
+              :
+
+              "Register"
+
+            }
+
+
+          </Button>
+
+
+
+
+
+
+
+          <div className="
+          text-center
+          text-sm
+          text-zinc-500
+          "
+          >
+
+            Already have an account?{" "}
+
+
+            <Link
+
+              href="/login"
+
+              className="
+              text-blue-600
+              font-medium
+              hover:underline
+              "
+
+            >
+
+              Sign in
+
+            </Link>
+
+
+          </div>
+
+
+
+
+        </form>
+
+
+      </Card>
+
+
+    </div>
+
+  );
 }

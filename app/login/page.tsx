@@ -1,12 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // সফল লগইনের পর পেজ ঘোরানোর জন্য (ঐচ্ছিক)
 import { Card, Button, Link, TextField, Label, InputGroup, Input } from "@heroui/react";
 import { Eye, EyeSlash, At, ShieldKeyhole } from "@gravity-ui/icons";
-import { signIn } from "../lib/auth-client";
+import { logInWithEmail } from "@/lib/auth-service";
+
+// 🔥 পরিবর্তন: আমরা '../lib/auth-service' থেকে আমাদের তৈরি করা ফায়ারবেস ফাংশনটি ইম্পোর্ট করছি
+// import { logInWithEmail } from "../lib/auth-service";
 
 
 export default function SigninPage() {
+    const router = useRouter(); // ঐচ্ছিক: রিডাইরেক্টের জন্য
+
     // Form fields
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -19,9 +25,7 @@ export default function SigninPage() {
 
     const toggleVisibility = () => setIsVisible(!isVisible);
 
-    const handleSignin = async (
-  e: React.FormEvent<HTMLFormElement>
-) => {
+    const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         setError("");
@@ -29,22 +33,25 @@ export default function SigninPage() {
         setIsLoading(true);
 
         try {
-            const { data, error: authError } = await signIn.email({
-                email,
-                password,
-                callbackURL: "/" 
-            });
+            // 🔥 পরিবর্তন: আমরা ফায়ারবেস ফাংশন 'logInWithEmail' কে এখানে কল করছি
+            // এবং সরাসরি 'email' ও 'password' পাস করছি। 
+            const user = await logInWithEmail(email, password);
 
-            if (authError) {
-                setError(authError.message || "Invalid email or password.");
-            } else {
-                setSuccess("Signed in successfully! Redirecting...");
-                setEmail("");
-                setPassword("");
-            }
+            // সফল হলে এখানে ঢুকবে
+            setSuccess("Signed in successfully! Redirecting...");
+            setEmail("");
+            setPassword("");
+            
+            // 🔥 ঐচ্ছিক: ১ সেকেন্ড পর হোম পেজে রিডাইরেক্ট করা
+            setTimeout(() => {
+                router.push("/");
+            }, 1000);
+
         } catch (err) {
-            setError("An unexpected network error occurred.");
-        } finally {
+            // 🔥 ফিক্স: 'err: any' তুলে দিয়ে এখানে টাইপ কাস্টিং করা হয়েছে
+            const errorInstance = err as Error;
+            setError(errorInstance.message || "Something went wrong during signup.");
+        }finally {
             setIsLoading(false);
         }
     };
@@ -56,7 +63,7 @@ export default function SigninPage() {
                 {/* Header Container */}
                 <div className="flex flex-col items-center justify-center gap-1 pb-6 border-b border-zinc-100 dark:border-zinc-800 mb-6 text-center">
                     <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">Welcome back</h1>
-                    <p className="text-sm text-zinc-600 dark:text-zinc-400">Enter your credentials to access your account</p>
+                    <p className="text-sm text-zinc-600 dark:text-zinc-400">Enter your credentials to access your ShopCart account</p>
                 </div>
 
                 {/* Form Body */}
@@ -113,21 +120,18 @@ export default function SigninPage() {
                     )}
 
                     {/* Action Button */}
-                <Button
-  type="submit"
-  className="w-full bg-blue-600 text-white"
-   isDisabled={isLoading}
->
-  {
-    isLoading ? "Logging in..." : "Log In"
-  }
-</Button>
-        
-         
+                    <Button
+                        type="submit"
+                        className="w-full bg-blue-600 text-white mt-2 rounded-xl transition hover:bg-blue-700"
+                        isDisabled={isLoading}
+                    >
+                        {isLoading ? "Logging in..." : "Log In"}
+                    </Button>
+
                     {/* Navigation Option */}
                     <div className="text-center pt-4 border-t border-zinc-100 dark:border-zinc-800 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                        New to HireLoop?{" "}
-                        <Link href="/register" className="font-medium cursor-pointer text-sm text-blue-600 dark:text-blue-400">
+                        New to ShopCart?{" "} {/* 🔥 পরিবর্তন: HireLoop থেকে ShopCart করা হয়েছে */}
+                        <Link href="/register" className="font-medium cursor-pointer text-sm text-blue-600 dark:text-blue-400 hover:underline">
                             Create an account
                         </Link>
                     </div>
