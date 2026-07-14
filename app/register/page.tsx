@@ -158,7 +158,8 @@ export default function SignupPage() {
 
           <TextField
             isRequired
-            className="flex flex-col gap-2"
+                      className="flex flex-col gap-2"
+                      name="name"
           >
 
             <Label>
@@ -212,7 +213,8 @@ export default function SignupPage() {
 
           <TextField
             isRequired
-            className="flex flex-col gap-2"
+                      className="flex flex-col gap-2"
+                      name="email"
           >
 
             <Label>
@@ -275,7 +277,8 @@ export default function SignupPage() {
 
           <TextField
             isRequired
-            className="flex flex-col gap-2"
+                      className="flex flex-col gap-2"
+                      name="password"
           >
 
             <Label>
