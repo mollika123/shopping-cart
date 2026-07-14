@@ -43,58 +43,69 @@ export default function SignupPage() {
   };
 
 
-  const handleSignup = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+ const handleSignup = async (
+  e: React.FormEvent<HTMLFormElement>
+) => {
 
-    e.preventDefault();
+  e.preventDefault();
 
-    setError("");
-    setSuccess("");
-    setIsLoading(true);
+  setError("");
+  setSuccess("");
 
+  // ✅ Name validation
+  if (!name.trim()) {
+    setError("Name is required");
+    return;
+  }
 
-    try {
+  // ✅ Email validation
+  if (!email.includes("@")) {
+    setError("Please enter a valid email address");
+    return;
+  }
 
-      await signUpWithEmail(
-        name,
-        email,
-        password
-      );
+  // ✅ Password validation
+  if (password.length < 8) {
+    setError("Password must be at least 8 characters");
+    return;
+  }
 
+  // সব validation pass হলে loading শুরু হবে
+  setIsLoading(true);
 
-      setSuccess(
-        "Account created successfully!"
-      );
+  try {
 
+    await signUpWithEmail(
+      name,
+      email,
+      password
+    );
 
-      setName("");
-      setEmail("");
-      setPassword("");
+    setSuccess("Account created successfully!");
 
+    setName("");
+    setEmail("");
+    setPassword("");
 
-      setTimeout(() => {
-        router.push("/");
-      }, 1500);
+    setTimeout(() => {
+      router.push("/");
+    }, 1500);
 
+  } catch (err) {
 
-    } catch (err) {
+    const errorInstance = err as Error;
 
-      const errorInstance = err as Error;
+    setError(
+      errorInstance.message ||
+      "Something went wrong"
+    );
 
-      setError(
-        errorInstance.message ||
-        "Something went wrong"
-      );
+  } finally {
 
+    setIsLoading(false);
 
-    } finally {
-
-      setIsLoading(false);
-
-    }
-
-  };
+  }
+};
 
 
 

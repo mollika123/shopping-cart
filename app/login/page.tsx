@@ -25,36 +25,57 @@ export default function SigninPage() {
 
     const toggleVisibility = () => setIsVisible(!isVisible);
 
-    const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleSignin = async (
+  e: React.FormEvent<HTMLFormElement>
+) => {
+  e.preventDefault();
 
-        setError("");
-        setSuccess("");
-        setIsLoading(true);
+  setError("");
+  setSuccess("");
 
-        try {
-            // 🔥 পরিবর্তন: আমরা ফায়ারবেস ফাংশন 'logInWithEmail' কে এখানে কল করছি
-            // এবং সরাসরি 'email' ও 'password' পাস করছি। 
-            const user = await logInWithEmail(email, password);
+  // ✅ Email validation
+  if (!email.trim()) {
+    setError("Email is required");
+    return;
+  }
 
-            // সফল হলে এখানে ঢুকবে
-            setSuccess("Signed in successfully! Redirecting...");
-            setEmail("");
-            setPassword("");
-            
-            // 🔥 ঐচ্ছিক: ১ সেকেন্ড পর হোম পেজে রিডাইরেক্ট করা
-            setTimeout(() => {
-                router.push("/");
-            }, 1000);
+  if (!/\S+@\S+\.\S+/.test(email)) {
+    setError("Please enter a valid email address");
+    return;
+  }
 
-        } catch (err) {
-            // 🔥 ফিক্স: 'err: any' তুলে দিয়ে এখানে টাইপ কাস্টিং করা হয়েছে
-            const errorInstance = err as Error;
-            setError(errorInstance.message || "Something went wrong during signup.");
-        }finally {
-            setIsLoading(false);
-        }
-    };
+  // ✅ Password validation
+  if (!password.trim()) {
+    setError("Password is required");
+    return;
+  }
+
+  if (password.length < 8) {
+    setError("Password must be at least 8 characters");
+    return;
+  }
+
+  // Validation pass হলে loading শুরু হবে
+  setIsLoading(true);
+
+  try {
+    await logInWithEmail(email, password);
+
+    setSuccess("Signed in successfully! Redirecting...");
+    setEmail("");
+    setPassword("");
+
+    setTimeout(() => {
+      router.push("/");
+    }, 1000);
+
+  } catch (err) {
+    const errorInstance = err as Error;
+    setError(errorInstance.message || "Something went wrong during login.");
+  } finally {
+    setIsLoading(false);
+  }
+};
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-zinc-950 px-4">
